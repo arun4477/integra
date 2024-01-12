@@ -1,0 +1,14 @@
+---
+- name: Playbook to generate system status
+  hosts: all
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Get system uptime
+      command: "uptime -p"
+      register: uptime_info
+
+    - name: Hello Message
+      debug:
+        var: uptime_info.stdout
