@@ -1,0 +1,20 @@
+---
+- name: Step 1: Fetch file from source host
+  hosts: 10.20.103.240
+  gather_facts: no
+  tasks:
+    - name: Ensure a line exists in the file
+      ansible.builtin.lineinfile:
+        path: /tmp/file.txt
+        line: "This line must exist in the file"
+  
+
+- name: Step 2: Copy file to destination host
+  hosts: 10.20.103.107
+  gather_facts: no
+  tasks:
+    - name: Copy file to destination host
+      copy:
+        src: /tmp/file.txt
+        dest: /path/to/destination/file.txt
+        mode: '0644'
