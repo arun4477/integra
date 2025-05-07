@@ -5,6 +5,7 @@
   gather_facts: yes
   vars:
     target_dir: "/tmp/cpu_utilization-{{ansible_date_time.date}}.csv"
+    csv_content: ""
   tasks:
     - name: Get last patch details on RHEL
       shell: "sudo yum list updates --security | head -n3"
