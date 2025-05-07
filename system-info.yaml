@@ -30,21 +30,11 @@
           {% for host in ansible_play_hosts_all %}
           {{ hostvars[host].ansible_facts['fqdn'] }},{{ hostvars[host].ansible_default_ipv4.address }},{{ hostvars[host].ansible_memtotal_mb }},{{ hostvars[host].ansible_memory_mb.real.used }},{{ hostvars[host].ansible_memory_mb.real.total - hostvars[host].ansible_memory_mb.real.used }},{{ (hostvars[host].ansible_memory_mb.cached + hostvars[host].ansible_memory_mb.buffers) if (hostvars[host].ansible_memory_mb.cached is defined and hostvars[host].ansible_memory_mb.buffers is defined) else "N/A" }},{{ hostvars[host].uptime_info.stdout }},{{ ansible_date_time.iso8601 }}
           {% endfor %}
-
-- name: Copy file to destination host
-  hosts: 10.20.103.107
-  gather_facts: no
-  tasks:
+          
     - name: Append data to CSV file
       lineinfile:
         line: "{{ item }}"
         path: "{{ target_dir }}"
         create: yes
       loop: "{{ csv_content.split('\n') }}"
-      
-    - name: Create a file with content
-      ansible.builtin.copy:
-        dest: /tmp/tmp-file.txt
-        content: |
-          line 01
-          line 02
+
