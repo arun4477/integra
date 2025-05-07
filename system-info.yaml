@@ -36,7 +36,7 @@
   tasks:
     - name: Create a file with content
       ansible.builtin.copy:
-        dest: /path/to/yourfile.txt
+        dest: /tmp/tmp-file.txt
         content: |
           line 01
           line 02
