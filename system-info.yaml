@@ -4,7 +4,7 @@
   become: true
   gather_facts: yes
   vars:
-    target_dir: "/root/test/cpu_utilization-{{ansible_date_time.date}}.csv"
+    target_dir: "/tmp/cpu_utilization-{{ansible_date_time.date}}.csv"
   tasks:
     - name: Get last patch details on RHEL
       shell: "sudo yum list updates --security | head -n3"
@@ -34,6 +34,13 @@
   hosts: 10.20.103.107
   gather_facts: no
   tasks:
+    - name: Append data to CSV file
+      lineinfile:
+        line: "{{ item }}"
+        path: "{{ target_dir }}"
+        create: yes
+      loop: "{{ csv_content.split('\n') }}"
+      
     - name: Create a file with content
       ansible.builtin.copy:
         dest: /tmp/tmp-file.txt
