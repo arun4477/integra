@@ -1,6 +1,6 @@
 ---
 - name: Gather system information
-  hosts: 10.20.103.240
+  hosts: rhel-vm-group
   become: true
   gather_facts: yes
   vars:
