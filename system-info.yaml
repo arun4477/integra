@@ -37,12 +37,7 @@
         path: "{{ target_dir }}"
         create: yes
       loop: "{{ csv_content.split('\n') }}"
-
-    - name: Fetch file from source host to Ansible pod
-      fetch:
-        src: "{{ target_dir }}"
-        dest: "{{ target_dir }}"
-        flat: yes
+      delegate_to: localhost
 
 - name: Copy file to destination host
   hosts: 10.20.103.107
